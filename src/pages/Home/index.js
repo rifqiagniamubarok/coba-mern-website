@@ -4,6 +4,7 @@ import "./home.scss";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
+import { setDataBlog } from "../../config/redux/action";
 
 const Home = () => {
   const { dataBlog } = useSelector((state) => state.homeReducer);
@@ -11,17 +12,8 @@ const Home = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    axios
-      .get("http://localhost:4000/v1/blog/posts?page=1&perPage=2")
-      .then((result) => {
-        const responseAPI = result.data;
-
-        dispatch({ type: "UPDATE_DATA_BLOG", payload: responseAPI.data });
-      })
-      .catch((err) => {
-        console.log("error :", err);
-      });
-  }, []);
+    dispatch(setDataBlog());
+  }, [dispatch]);
 
   let navigate = useNavigate();
   return (
